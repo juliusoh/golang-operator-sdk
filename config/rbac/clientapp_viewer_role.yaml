@@ -1,0 +1,27 @@
+# permissions for end users to view clientapps.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: clientapp-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: clinia-test
+    app.kubernetes.io/part-of: clinia-test
+    app.kubernetes.io/managed-by: kustomize
+  name: clientapp-viewer-role
+rules:
+- apiGroups:
+  - cache.clinia-test.com
+  resources:
+  - clientapps
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - cache.clinia-test.com
+  resources:
+  - clientapps/status
+  verbs:
+  - get

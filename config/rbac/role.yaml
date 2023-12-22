@@ -1,0 +1,32 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manager-role
+rules:
+- apiGroups:
+  - cache.clinia-test.com
+  resources:
+  - clientapps
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - cache.clinia-test.com
+  resources:
+  - clientapps/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - cache.clinia-test.com
+  resources:
+  - clientapps/status
+  verbs:
+  - get
+  - patch
+  - update

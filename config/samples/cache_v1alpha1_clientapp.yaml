@@ -1,0 +1,12 @@
+apiVersion: cache.clinia-test.com/v1alpha1
+kind: ClientApp
+metadata:
+  labels:
+    app.kubernetes.io/name: clientapp
+    app.kubernetes.io/instance: clientapp-sample
+    app.kubernetes.io/part-of: clinia-test
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: clinia-test
+  name: clientapp-sample
+spec:
+  # TODO(user): Add fields here
