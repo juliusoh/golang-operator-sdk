@@ -9,4 +9,19 @@ metadata:
     app.kubernetes.io/created-by: clinia-test
   name: clientapp-sample
 spec:
-  # TODO(user): Add fields here
+  name: clientapp-sample
+  image: "clientapp:latest"
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  replicas: 3
+  env:
+    - name: REDIS_HOST
+      value: "redis-master"
+    - name: REDIS_PORT
+      value: "6379"
+  
