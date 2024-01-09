@@ -9,8 +9,8 @@ on:
       - main
 
 env:
-  ECR_REPOSITORY: juliusoh
-  TAG: clinia-test-${{ github.sha }}
+  ECR_REPOSITORY: clinia-test
+  TAG: ${{ github.sha }}
 
 jobs:
   build-and-push:
@@ -34,8 +34,8 @@ jobs:
           IMG: "${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.TAG }}"
         run: |
           echo ${{ env.IMG }}
-          docker build -t ${{ env.IMG }} .
-          docker push ${{ env.IMG }}
+          make docker-build 
+          make docker-push
     #   - name: Checkout
     #     uses: actions/checkout@v3
     #     with:
