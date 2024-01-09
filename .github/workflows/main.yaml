@@ -3,10 +3,10 @@ name: Docker Build/Push and Deploy
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 env:
   ECR_REPOSITORY: juliusoh
