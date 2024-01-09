@@ -31,8 +31,8 @@ jobs:
       - name: Build, tag, and push Docker image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMG: $ECR_REGISTRY/$ECR_REPOSITORY:$TAG
         run: |
+          IMG=$ECR_REGISTRY/$ECR_REPOSITORY:$TAG
           make docker-build
           make docker-push
     #   - name: Checkout
