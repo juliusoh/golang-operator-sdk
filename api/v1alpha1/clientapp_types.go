@@ -30,12 +30,12 @@ type ClientAppSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of ClientApp. Edit clientapp_types.go to remove/update
-	Name string `json:"name,omitempty"`
-	Image string `json:"image,omitempty"`
-	Replicas int32 `json:"replicas,omitempty"`
-	Env []corev1.EnvVar `json:"env,omitempty"`
-	Port int32 `json:"port,omitempty"`
-	Host string `json:"host,omitempty"`
+	Name      string                      `json:"name,omitempty"`
+	Image     string                      `json:"image,omitempty"`
+	Replicas  int32                       `json:"replicas,omitempty"`
+	Env       []corev1.EnvVar             `json:"env,omitempty"`
+	Port      int32                       `json:"port,omitempty"`
+	Host      string                      `json:"host,omitempty"`
 	Resources corev1.ResourceRequirements `json:"resources,omitempty"`
 }
 
@@ -43,8 +43,8 @@ type ClientAppSpec struct {
 type ClientAppStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	URL string `json:"url,omitempty"`
-	Available bool `json:"available,omitempty"`
+	URL       string `json:"url,omitempty"`
+	Available bool   `json:"available,omitempty"`
 }
 
 //+kubebuilder:object:root=true
