@@ -45,6 +45,9 @@ type ClientAppReconciler struct {
 //+kubebuilder:rbac:groups=cache.clinia-test.com,resources=clientapps,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups=cache.clinia-test.com,resources=clientapps/status,verbs=get;update;patch
 //+kubebuilder:rbac:groups=cache.clinia-test.com,resources=clientapps/finalizers,verbs=update
+//+kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups="",resources=services,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=networking.k8s.io,resources=ingresses,verbs=get;list;watch;create;update;patch;delete
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
@@ -94,18 +97,27 @@ func (r *ClientAppReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 		return ctrl.Result{Requeue: true}, nil
 	}
 
-	// Update ClientApp Status based on the Deployment's status
+	// Refetch the latest ClientApp before updating its status
+	latestClientApp := &cachev1alpha1.ClientApp{}
+	if err := r.Get(ctx, req.NamespacedName, latestClientApp); err != nil {
+		// Handle error if unable to fetch the latest ClientApp
+		return ctrl.Result{}, err
+	}
+
+	// Update ClientApp Status based on the Deployment's status, using the refetched instance
 	if deployment.Status.AvailableReplicas == clientApp.Spec.Replicas {
-		if !clientApp.Status.Available {
-			clientApp.Status.Available = true
-			if err := r.Status().Update(ctx, clientApp); err != nil {
+		if !latestClientApp.Status.Available {
+			latestClientApp.Status.Available = true
+			if err := r.Status().Update(ctx, latestClientApp); err != nil {
+				// Handle error, including a potential conflict
 				return ctrl.Result{}, err
 			}
 		}
 	} else {
-		if clientApp.Status.Available {
-			clientApp.Status.Available = false
-			if err := r.Status().Update(ctx, clientApp); err != nil {
+		if latestClientApp.Status.Available {
+			latestClientApp.Status.Available = false
+			if err := r.Status().Update(ctx, latestClientApp); err != nil {
+				// Handle error, including a potential conflict
 				return ctrl.Result{}, err
 			}
 		}
