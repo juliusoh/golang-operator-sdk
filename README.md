@@ -1,4 +1,4 @@
-# clinia-test
+# operator-sdk
 // TODO(user): Add simple overview of use/purpose
 
 ## Description
